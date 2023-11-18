@@ -20,6 +20,10 @@ export function rolesReducer(draft: Role[], action: Action) {
       break;
     }
 
+    case "delete_role": {
+      return draft.filter((role) => role.id !== action.payload.roleId);
+    }
+
     default:
       throw Error("Unknown action type: " + action.type);
   }

@@ -3,6 +3,7 @@
 import { rolesReducer } from "@/lib/reducers";
 import { formatString } from "@/lib/utils";
 import { Role } from "@/types/role";
+import { Trash2 } from "lucide-react";
 import React from "react";
 import { useImmerReducer } from "use-immer";
 import { Checkbox } from "../ui/checkbox";
@@ -86,6 +87,17 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
                   className="dashboardHiddenAction"
                 />
                 <span>{formatString(role.name)}</span>
+                <Trash2
+                  onClick={() => {
+                    dispatch({
+                      type: "delete_role",
+                      payload: {
+                        roleId: role.id,
+                      },
+                    });
+                  }}
+                  className="dashboardHiddenAction h-4 w-4 cursor-pointer"
+                />
               </div>
             </TableCell>
             {allPermissions.map((permission) =>
