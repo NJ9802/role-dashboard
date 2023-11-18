@@ -20,6 +20,29 @@ export function rolesReducer(draft: Role[], action: Action) {
       break;
     }
 
+    case "change_all_entity_permissions": {
+      const { checked, entity, allPermissions } = action.payload;
+
+      const entityPermissions = allPermissions.filter(
+        (permission: string) => permission.split(":")[0] === entity,
+      );
+
+      if (checked) {
+        draft.forEach((role) => {
+          role.permissions = Array.from(
+            new Set([...role.permissions, ...entityPermissions]),
+          );
+        });
+      } else {
+        draft.forEach((role) => {
+          role.permissions = role.permissions.filter(
+            (item) => item.split(":")[0] !== entity,
+          );
+        });
+      }
+      break;
+    }
+
     case "delete_role": {
       return draft.filter((role) => role.id !== action.payload.roleId);
     }

@@ -54,7 +54,22 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
               className="group border text-center"
               colSpan={entitiesWithPermissions[entity].length}
             >
-              {formatString(entity)}
+              <div className="flex items-center justify-center gap-4">
+                <Checkbox
+                  className="dashboardHiddenAction"
+                  onCheckedChange={(checked) => {
+                    dispatch({
+                      type: "change_all_entity_permissions",
+                      payload: {
+                        entity,
+                        checked,
+                        allPermissions,
+                      },
+                    });
+                  }}
+                />
+                <span>{formatString(entity)}</span>
+              </div>
             </TableHead>
           ))}
         </TableRow>
