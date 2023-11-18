@@ -1,0 +1,26 @@
+import { Role } from "@/types/role";
+
+export interface Action {
+  type: string;
+  payload: { [key: string]: any };
+}
+
+export function rolesReducer(draft: Role[], action: Action) {
+  switch (action.type) {
+    case "change_all_role_permissions": {
+      const { roleId, checked, allPermissions } = action.payload;
+
+      const role = draft.filter((item) => item.id === roleId)[0];
+
+      if (checked) {
+        role.permissions = allPermissions;
+      } else {
+        role.permissions = [];
+      }
+      break;
+    }
+
+    default:
+      throw Error("Unknown action type: " + action.type);
+  }
+}

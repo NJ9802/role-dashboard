@@ -1,8 +1,11 @@
 "use client";
 
+import { rolesReducer } from "@/lib/reducers";
 import { formatString } from "@/lib/utils";
 import { Role } from "@/types/role";
 import React from "react";
+import { useImmerReducer } from "use-immer";
+import { Checkbox } from "../ui/checkbox";
 import {
   Table,
   TableBody,
@@ -21,6 +24,8 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
   roles,
   allPermissions,
 }) => {
+  const [rolesState, dispatch] = useImmerReducer(rolesReducer, roles);
+
   let entitiesWithPermissions: { [key: string]: string[] } = {};
 
   allPermissions.forEach((permission) => {
@@ -63,10 +68,25 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {roles.map((role) => (
+        {rolesState.map((role) => (
           <TableRow key={role.id}>
             <TableCell className="group border">
-              {formatString(role.name)}
+              <div className="flex items-center gap-4 pr-4">
+                <Checkbox
+                  onCheckedChange={(checked) => {
+                    dispatch({
+                      type: "change_all_role_permissions",
+                      payload: {
+                        roleId: role.id,
+                        checked,
+                        allPermissions,
+                      },
+                    });
+                  }}
+                  className="dashboardHiddenAction"
+                />
+                <span>{formatString(role.name)}</span>
+              </div>
             </TableCell>
             {allPermissions.map((permission) =>
               role.permissions.includes(permission) ? (
