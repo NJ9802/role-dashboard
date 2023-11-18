@@ -4,7 +4,7 @@ import { rolesReducer } from "@/lib/reducers";
 import { formatString } from "@/lib/utils";
 import { Role } from "@/types/role";
 import { Trash2 } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { useImmerReducer } from "use-immer";
 import { Checkbox } from "../ui/checkbox";
 import {
@@ -26,10 +26,12 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
   allPermissions,
 }) => {
   const [rolesState, dispatch] = useImmerReducer(rolesReducer, roles);
+  const [allPermissionsState, setAllPermissionsState] =
+    useState(allPermissions);
 
   let entitiesWithPermissions: { [key: string]: string[] } = {};
 
-  allPermissions.forEach((permission) => {
+  allPermissionsState.forEach((permission) => {
     const entity = permission.split(":")[0];
 
     const permitType = permission.split(":")[1];
@@ -63,12 +65,27 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
                       payload: {
                         entity,
                         checked,
-                        allPermissions,
+                        allPermissions: allPermissionsState,
                       },
                     });
                   }}
                 />
                 <span>{formatString(entity)}</span>
+                <Trash2
+                  onClick={() => {
+                    setAllPermissionsState([
+                      ...allPermissionsState.filter(
+                        (permission) => permission.split(":")[0] !== entity,
+                      ),
+                    ]);
+
+                    dispatch({
+                      type: "delete_entity_permissions",
+                      payload: { entity },
+                    });
+                  }}
+                  className="dashboardHiddenAction h-4 w-4 cursor-pointer"
+                />
               </div>
             </TableHead>
           ))}
@@ -95,7 +112,7 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
                       payload: {
                         roleId: role.id,
                         checked,
-                        allPermissions,
+                        allPermissions: allPermissionsState,
                       },
                     });
                   }}
@@ -115,7 +132,7 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
                 />
               </div>
             </TableCell>
-            {allPermissions.map((permission) =>
+            {allPermissionsState.map((permission) =>
               role.permissions.includes(permission) ? (
                 <TableCell
                   key={permission}

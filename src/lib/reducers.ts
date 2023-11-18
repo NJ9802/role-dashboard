@@ -43,6 +43,15 @@ export function rolesReducer(draft: Role[], action: Action) {
       break;
     }
 
+    case "delete_entity_permissions": {
+      draft.forEach((role) => {
+        role.permissions = role.permissions.filter(
+          (item) => item.split(":")[0] !== action.payload.entity,
+        );
+      });
+      break;
+    }
+
     case "delete_role": {
       return draft.filter((role) => role.id !== action.payload.roleId);
     }
