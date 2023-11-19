@@ -1,4 +1,5 @@
 import { Role } from "@/types/role";
+import { v4 as uuidv4 } from "uuid";
 
 export interface Action {
   type: string;
@@ -62,6 +63,20 @@ export function rolesReducer(draft: Role[], action: Action) {
           );
         });
       }
+      break;
+    }
+
+    case "add_new_role": {
+      const { allPermissions, newRoleName } = action.payload;
+      const readPermissions: string[] = allPermissions.filter(
+        (permission: string) => permission.split(":")[1].match("READ"),
+      );
+
+      draft.push({
+        id: uuidv4(),
+        name: newRoleName,
+        permissions: readPermissions,
+      });
       break;
     }
 

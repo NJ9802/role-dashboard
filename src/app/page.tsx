@@ -58,7 +58,6 @@ export default function Home() {
     "STOCK:DELETE",
   ];
 
-  console.log(roles);
   return (
     <main className="flex min-h-screen flex-col  items-center justify-between p-24">
       <RoleDasboard roles={roles} allPermissions={allPermissions} />

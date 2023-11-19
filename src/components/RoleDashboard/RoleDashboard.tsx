@@ -15,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
+import AddNewRole from "./addNewRole";
 
 interface RoleDashboardProps {
   roles: Role[];
@@ -33,6 +34,13 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
   const entitiesWithPermissions = parsePermissions(allPermissionsState);
 
   const entities = Object.keys(entitiesWithPermissions);
+
+  const addNewRole = (newRoleName: string) => {
+    dispatch({
+      type: "add_new_role",
+      payload: { allPermissions: allPermissionsState, newRoleName },
+    });
+  };
 
   return (
     <Table className="border-separate border-spacing-0">
@@ -186,6 +194,11 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
           </TableRow>
         ))}
       </TableBody>
+
+      <AddNewRole
+        addNewRole={addNewRole}
+        addButtonLength={allPermissionsState.length}
+      />
     </Table>
   );
 };
