@@ -7,6 +7,28 @@ export interface Action {
 
 export function rolesReducer(draft: Role[], action: Action) {
   switch (action.type) {
+    case "change_all_permissions": {
+      const { checked, permission } = action.payload;
+
+      if (checked) {
+        draft.forEach(
+          (role) =>
+            (role.permissions = Array.from(
+              new Set([...role.permissions, permission]),
+            )),
+        );
+      } else {
+        draft.forEach(
+          (role) =>
+            (role.permissions = role.permissions.filter(
+              (item) => item !== permission,
+            )),
+        );
+      }
+
+      break;
+    }
+
     case "change_all_role_permissions": {
       const { roleId, checked, allPermissions } = action.payload;
 

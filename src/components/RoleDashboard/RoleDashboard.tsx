@@ -47,7 +47,7 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
               className="group border text-center"
               colSpan={entitiesWithPermissions[entity].length}
             >
-              <div className="flex items-center justify-center gap-4">
+              <div className="flex items-center justify-center gap-3">
                 <Checkbox
                   className="dashboardHiddenAction"
                   onCheckedChange={(checked) => {
@@ -87,8 +87,23 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
         <TableRow>
           {entities.map((entity) => {
             return entitiesWithPermissions[entity].map((permission) => (
-              <TableHead key={permission} className="border text-center">
-                {formatString(permission)}
+              <TableHead key={permission} className="group border  text-center">
+                <div className="flex items-center gap-3 pr-4">
+                  <Checkbox
+                    onCheckedChange={(checked) => {
+                      dispatch({
+                        type: "change_all_permissions",
+                        payload: {
+                          checked,
+                          permission: `${entity}:${permission}`,
+                        },
+                      });
+                    }}
+                    className="dashboardHiddenAction"
+                  />
+
+                  <span>{formatString(permission)}</span>
+                </div>
               </TableHead>
             ));
           })}
@@ -99,7 +114,7 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
         {rolesState.map((role) => (
           <TableRow key={role.id}>
             <TableCell className="group border">
-              <div className="flex items-center gap-4 pr-4">
+              <div className="flex items-center gap-3 pr-4">
                 <Checkbox
                   onCheckedChange={(checked) => {
                     dispatch({
