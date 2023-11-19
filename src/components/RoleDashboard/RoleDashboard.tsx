@@ -1,7 +1,7 @@
 "use client";
 
 import { rolesReducer } from "@/lib/reducers";
-import { formatString, parsePermissions } from "@/lib/utils";
+import { formatPermission, formatString, parsePermissions } from "@/lib/utils";
 import { Role } from "@/types/role";
 import { Trash2 } from "lucide-react";
 import React, { useState } from "react";
@@ -26,8 +26,9 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
   allPermissions,
 }) => {
   const [rolesState, dispatch] = useImmerReducer(rolesReducer, roles);
-  const [allPermissionsState, setAllPermissionsState] =
-    useState(allPermissions);
+  const [allPermissionsState, setAllPermissionsState] = useState(
+    [...allPermissions].sort(),
+  );
 
   const entitiesWithPermissions = parsePermissions(allPermissionsState);
 
@@ -95,7 +96,7 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
                         type: "change_all_permissions",
                         payload: {
                           checked,
-                          permission: `${entity}:${permission}`,
+                          permission: formatPermission({ entity, permission }),
                         },
                       });
                     }}
@@ -103,6 +104,25 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
                   />
 
                   <span>{formatString(permission)}</span>
+
+                  <Trash2
+                    onClick={() => {
+                      setAllPermissionsState([
+                        ...allPermissionsState.filter(
+                          (item) =>
+                            item !== formatPermission({ entity, permission }),
+                        ),
+                      ]);
+
+                      dispatch({
+                        type: "delete_permission",
+                        payload: {
+                          permission: formatPermission({ entity, permission }),
+                        },
+                      });
+                    }}
+                    className="dashboardHiddenAction h-4 w-4 cursor-pointer"
+                  />
                 </div>
               </TableHead>
             ));

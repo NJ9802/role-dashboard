@@ -26,3 +26,13 @@ export function parsePermissions(permissions: string[]) {
 
   return entitiesWithPermissions;
 }
+
+export function formatPermission({
+  entity,
+  permission,
+}: {
+  entity: string;
+  permission: string;
+}) {
+  return `${entity}:${permission}`;
+}
