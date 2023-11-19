@@ -1,7 +1,7 @@
 "use client";
 
 import { rolesReducer } from "@/lib/reducers";
-import { formatString } from "@/lib/utils";
+import { formatString, parsePermissions } from "@/lib/utils";
 import { Role } from "@/types/role";
 import { Trash2 } from "lucide-react";
 import React, { useState } from "react";
@@ -29,19 +29,9 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
   const [allPermissionsState, setAllPermissionsState] =
     useState(allPermissions);
 
-  let entitiesWithPermissions: { [key: string]: string[] } = {};
+  const entitiesWithPermissions = parsePermissions(allPermissionsState);
 
-  allPermissionsState.forEach((permission) => {
-    const entity = permission.split(":")[0];
-
-    const permitType = permission.split(":")[1];
-
-    if (!entitiesWithPermissions[entity]) {
-      entitiesWithPermissions[entity] = [];
-    }
-
-    entitiesWithPermissions[entity].push(permitType);
-  });
+  const entities = Object.keys(entitiesWithPermissions);
 
   return (
     <Table>
@@ -50,7 +40,8 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
           <TableHead className="border text-center" rowSpan={2}>
             Role
           </TableHead>
-          {Object.keys(entitiesWithPermissions).map((entity) => (
+
+          {entities.map((entity) => (
             <TableHead
               key={entity}
               className="group border text-center"
@@ -70,7 +61,9 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
                     });
                   }}
                 />
+
                 <span>{formatString(entity)}</span>
+
                 <Trash2
                   onClick={() => {
                     setAllPermissionsState([
@@ -90,8 +83,9 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
             </TableHead>
           ))}
         </TableRow>
+
         <TableRow>
-          {Object.keys(entitiesWithPermissions).map((entity) => {
+          {entities.map((entity) => {
             return entitiesWithPermissions[entity].map((permission) => (
               <TableHead key={permission} className="border text-center">
                 {formatString(permission)}
@@ -100,6 +94,7 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
           })}
         </TableRow>
       </TableHeader>
+
       <TableBody>
         {rolesState.map((role) => (
           <TableRow key={role.id}>
@@ -118,7 +113,9 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
                   }}
                   className="dashboardHiddenAction"
                 />
+
                 <span>{formatString(role.name)}</span>
+
                 <Trash2
                   onClick={() => {
                     dispatch({
@@ -132,6 +129,7 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
                 />
               </div>
             </TableCell>
+
             {allPermissionsState.map((permission) =>
               role.permissions.includes(permission) ? (
                 <TableCell
