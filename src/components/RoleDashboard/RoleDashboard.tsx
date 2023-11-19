@@ -35,10 +35,13 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
   const entities = Object.keys(entitiesWithPermissions);
 
   return (
-    <Table>
-      <TableHeader>
+    <Table className="border-separate border-spacing-0">
+      <TableHeader className="sticky top-0 z-20 bg-white">
         <TableRow>
-          <TableHead className="border text-center" rowSpan={2}>
+          <TableHead
+            className="sticky left-0 border bg-white text-center"
+            rowSpan={2}
+          >
             Role
           </TableHead>
 
@@ -130,10 +133,10 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
         </TableRow>
       </TableHeader>
 
-      <TableBody>
+      <TableBody className="z-10">
         {rolesState.map((role) => (
-          <TableRow key={role.id}>
-            <TableCell className="group border">
+          <TableRow key={role.id} className="group">
+            <TableCell className="group sticky left-0 border bg-white transition-colors group-hover:bg-muted/50">
               <div className="flex items-center gap-3 pr-4">
                 <Checkbox
                   onCheckedChange={(checked) => {
