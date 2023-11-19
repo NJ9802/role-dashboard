@@ -1,11 +1,12 @@
 import RoleDasboard from "@/components/RoleDashboard/RoleDashboard";
 import { Role } from "@/types/role";
+import { ObjectId } from "mongodb";
 
 export default function Home() {
   const roles: Role[] = [
     {
-      id: "1",
-      name: "admin",
+      id: new ObjectId().toHexString(),
+      name: "ADMIN",
       permissions: [
         "PROJECT:WRITE",
         "PROJECT:READ",
@@ -22,13 +23,13 @@ export default function Home() {
       ],
     },
     {
-      id: "2",
-      name: "client",
+      id: new ObjectId().toHexString(),
+      name: "Client",
       permissions: ["STORE:SELL_PRODUCT", "PROJECT:READ", "STORE:READ"],
     },
     {
-      id: "3",
-      name: "ceo",
+      id: new ObjectId().toHexString(),
+      name: "CEO",
       permissions: [
         "PROJECT:READ",
         "STORE:READ",
@@ -57,6 +58,7 @@ export default function Home() {
     "STOCK:DELETE",
   ];
 
+  console.log(roles);
   return (
     <main className="flex min-h-screen flex-col  items-center justify-between p-24">
       <RoleDasboard roles={roles} allPermissions={allPermissions} />

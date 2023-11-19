@@ -152,7 +152,7 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
                   className="dashboardHiddenAction"
                 />
 
-                <span>{formatString(role.name)}</span>
+                <span>{role.name}</span>
 
                 <Trash2
                   onClick={() => {
