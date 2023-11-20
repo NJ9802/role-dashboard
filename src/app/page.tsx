@@ -1,4 +1,4 @@
-import RoleDasboard from "@/components/RoleDashboard/RoleDashboard";
+import RoleDashboard from "@/components/RoleDashboard/RoleDashboard";
 import { Role } from "@/types/role";
 import { ObjectId } from "mongodb";
 
@@ -60,7 +60,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col  items-center justify-between p-24">
-      <RoleDasboard roles={roles} allPermissions={allPermissions} />
+      <RoleDashboard roles={roles} allPermissions={allPermissions} />
     </main>
   );
 }

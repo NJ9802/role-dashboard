@@ -2,20 +2,16 @@
 
 import clsx from "clsx";
 import { Plus } from "lucide-react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Input } from "../ui/input";
 import { TableCell, TableFooter, TableRow } from "../ui/table";
+import { RolesConfigContext } from "./context/roleDashboardContext";
 
-interface AddNewRoleProps {
-  addNewRole: (newRoleName: string) => void;
-  addButtonLength: number;
-}
+interface AddNewRoleProps {}
 
-const AddNewRole: React.FC<AddNewRoleProps> = ({
-  addNewRole,
-  addButtonLength,
-}) => {
+const AddNewRole: React.FC<AddNewRoleProps> = ({}) => {
   const [newRoleName, setNewRoleName] = useState("");
+  const { addNewRole, allPermissionsState } = useContext(RolesConfigContext);
 
   const handleNewRoleCreation = () => {
     if (newRoleName) {
@@ -29,7 +25,7 @@ const AddNewRole: React.FC<AddNewRoleProps> = ({
       <TableRow>
         <TableCell className="sticky left-0 border bg-white transition-colors group-hover:bg-muted/50">
           <Input
-            className="border-none transition-colors focus-visible:ring-0 focus-visible:ring-offset-0"
+            className="min-w-[102px] border-none transition-colors focus-visible:ring-0 focus-visible:ring-offset-0"
             placeholder="Type Name"
             value={newRoleName}
             onChange={(e) => setNewRoleName(e.target.value)}
@@ -42,7 +38,7 @@ const AddNewRole: React.FC<AddNewRoleProps> = ({
             "border text-center",
             newRoleName && "cursor-pointer",
           )}
-          colSpan={addButtonLength}
+          colSpan={allPermissionsState.length}
         >
           <div className="flex items-center justify-center gap-2">
             <Plus
