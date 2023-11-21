@@ -38,7 +38,7 @@ const AddNewRole: React.FC<AddNewRoleProps> = ({}) => {
             "border text-center",
             newRoleName && "cursor-pointer",
           )}
-          colSpan={allPermissionsState.length}
+          colSpan={allPermissionsState.length + 1}
         >
           <div className="flex items-center justify-center gap-2">
             <Plus

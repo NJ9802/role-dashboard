@@ -21,8 +21,8 @@ const PermissionColumns: React.FC<PermissionColumnsProps> = ({}) => {
     <>
       {entities.map((entity) => {
         return entitiesWithPermissions[entity].map((permission) => (
-          <TableHead key={permission} className="group border  text-center">
-            <div className="flex items-center gap-3 pr-4">
+          <TableHead key={permission} className="group border px-0 text-center">
+            <div className="mx-4 flex items-center justify-center gap-3">
               <Checkbox
                 className="dashboardHiddenAction"
                 onCheckedChange={(checked) =>

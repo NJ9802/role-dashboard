@@ -25,6 +25,7 @@ interface IRolesConfigContext {
   deleteEntity: (entity: string) => void;
   deletePermission: (permission: string) => void;
   deleteRole: (roleId: string) => void;
+  setAllPermissionsState: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 export const RolesConfigContext = createContext<IRolesConfigContext>({
@@ -39,6 +40,7 @@ export const RolesConfigContext = createContext<IRolesConfigContext>({
   deleteEntity: () => {},
   deletePermission: () => {},
   deleteRole: () => {},
+  setAllPermissionsState: () => {},
 });
 
 const RolesDashboardContextProvider: React.FC<

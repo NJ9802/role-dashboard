@@ -22,7 +22,7 @@ const EntityColums: React.FC<EntityColumsProps> = ({}) => {
       {entities.map((entity) => (
         <TableHead
           key={entity}
-          className="group border"
+          className="group border px-0"
           colSpan={entitiesWithPermissions[entity].length}
         >
           <div className="flex items-center justify-center gap-3">

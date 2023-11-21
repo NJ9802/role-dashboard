@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
+import AddNewPermission from "./addNewPermission/addNewPermission";
 import AddNewRole from "./addNewRole";
 import EntityColums from "./entityColums";
 import PermissionColumns from "./permissionColumns";
@@ -26,7 +27,10 @@ const RoleTable: React.FC<RoleTableProps> = ({}) => {
           >
             Role
           </TableHead>
+
           <EntityColums />
+
+          <AddNewPermission />
         </TableRow>
 
         <TableRow>

@@ -109,6 +109,7 @@ const useRolesConfig = (roles: Role[], allPermissions: string[]) => {
     deleteEntity,
     deletePermission,
     deleteRole,
+    setAllPermissionsState,
   };
 };
 

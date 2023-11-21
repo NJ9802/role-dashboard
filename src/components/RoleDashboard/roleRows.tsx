@@ -20,8 +20,8 @@ const RoleRows: React.FC<RoleRowsProps> = ({}) => {
     <>
       {rolesState.map((role) => (
         <TableRow key={role.id} className="group">
-          <TableCell className="group sticky left-0 border bg-white transition-colors group-hover:bg-muted/50">
-            <div className="flex items-center gap-3 pr-4">
+          <TableCell className="group sticky left-0 border bg-white px-0 transition-colors group-hover:bg-muted/50">
+            <div className="flex items-center justify-center gap-3">
               <Checkbox
                 onCheckedChange={(checked) =>
                   changeAllRolePermissions(checked, role.id)
@@ -53,6 +53,7 @@ const RoleRows: React.FC<RoleRowsProps> = ({}) => {
               ></TableCell>
             ),
           )}
+          <TableCell className="border bg-muted"></TableCell>
         </TableRow>
       ))}
     </>
