@@ -36,7 +36,7 @@ const PermissionColumns: React.FC<PermissionColumnsProps> = ({}) => {
               <span>{formatString(permission)}</span>
 
               <Trash2
-                className="dashboardHiddenAction h-4 w-4 cursor-pointer"
+                className="dashboardHiddenAction h-4 w-4 shrink-0 cursor-pointer"
                 onClick={() =>
                   deletePermission(formatPermission({ entity, permission }))
                 }

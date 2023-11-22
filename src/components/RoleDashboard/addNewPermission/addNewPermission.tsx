@@ -21,7 +21,7 @@ const AddNewPermission: React.FC<AddNewPermissionProps> = ({}) => {
   return (
     <>
       <TableHead
-        className="cursor-pointer border bg-muted/50 text-center transition-colors hover:bg-muted/80"
+        className="cursor-pointer rounded-tr-xl border bg-primary/40 text-center text-foreground transition-colors hover:bg-primary/20"
         rowSpan={2}
         onClick={() => setIsOpen(true)}
       >

@@ -19,10 +19,10 @@ interface RoleTableProps {}
 const RoleTable: React.FC<RoleTableProps> = ({}) => {
   return (
     <Table className="border-separate border-spacing-0">
-      <TableHeader className="sticky top-0 z-20 bg-white">
+      <TableHeader className="sticky top-0 z-20 bg-secondary">
         <TableRow>
           <TableHead
-            className="sticky left-0 border bg-white text-center"
+            className="sticky left-0 rounded-tl-xl border border-secondary bg-secondary text-center"
             rowSpan={2}
           >
             Role

@@ -23,9 +23,9 @@ const AddNewRole: React.FC<AddNewRoleProps> = ({}) => {
   return (
     <TableFooter>
       <TableRow>
-        <TableCell className="sticky left-0 border bg-white transition-colors group-hover:bg-muted/50">
+        <TableCell className="sticky left-0 z-10 rounded-bl-xl border bg-white transition-colors group-hover:bg-muted/50">
           <Input
-            className="min-w-[102px] border-none transition-colors focus-visible:ring-0 focus-visible:ring-offset-0"
+            className="w-28 border-none transition-colors focus-visible:ring-0 focus-visible:ring-offset-0"
             placeholder="Type Name"
             value={newRoleName}
             onChange={(e) => setNewRoleName(e.target.value)}
@@ -36,9 +36,11 @@ const AddNewRole: React.FC<AddNewRoleProps> = ({}) => {
           onClick={handleNewRoleCreation}
           className={clsx(
             "border text-center",
-            newRoleName && "cursor-pointer",
+            newRoleName
+              ? "cursor-pointer bg-primary/40 hover:bg-primary/20"
+              : "opacity-50",
           )}
-          colSpan={allPermissionsState.length + 1}
+          colSpan={allPermissionsState.length}
         >
           <div className="flex items-center justify-center gap-2">
             <Plus
@@ -58,6 +60,7 @@ const AddNewRole: React.FC<AddNewRoleProps> = ({}) => {
             </span>
           </div>
         </TableCell>
+        <TableCell className="rounded-br-xl border bg-border"></TableCell>
       </TableRow>
     </TableFooter>
   );
