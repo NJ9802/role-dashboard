@@ -4,10 +4,10 @@ import { Role } from "@/types/role";
 import { useState } from "react";
 import { useImmerReducer } from "use-immer";
 
-const useRolesConfig = (roles: Role[], allPermissions: string[]) => {
-  const [rolesState, dispatch] = useImmerReducer(rolesReducer, roles);
+const useRolesConfig = (initialRoles: Role[], initialPermissions: string[]) => {
+  const [rolesState, dispatch] = useImmerReducer(rolesReducer, initialRoles);
   const [allPermissionsState, setAllPermissionsState] = useState(
-    [...allPermissions].sort(),
+    [...initialPermissions].sort(),
   );
 
   const entitiesWithPermissions = parsePermissions(allPermissionsState);
@@ -88,6 +88,13 @@ const useRolesConfig = (roles: Role[], allPermissions: string[]) => {
     });
   };
 
+  const updateRolePermission = (roleId: string, permission: string) => {
+    dispatch({
+      type: "update_role_permission",
+      payload: { roleId, permission },
+    });
+  };
+
   const deleteRole = (roleId: string) => {
     dispatch({
       type: "delete_role",
@@ -99,13 +106,16 @@ const useRolesConfig = (roles: Role[], allPermissions: string[]) => {
 
   return {
     rolesState,
+    initialRoles,
     allPermissionsState,
+    initialPermissions,
     entities,
     entitiesWithPermissions,
     addNewRole,
     changeAllEntityPermissions,
     changeAllPermissions,
     changeAllRolePermissions,
+    updateRolePermission,
     deleteEntity,
     deletePermission,
     deleteRole,

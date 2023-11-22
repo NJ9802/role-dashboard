@@ -12,6 +12,8 @@ interface RolesDashboardContextProviderProps {
 
 interface IRolesConfigContext {
   rolesState: Role[];
+  initialRoles: Role[];
+  initialPermissions: string[];
   allPermissionsState: string[];
   entities: string[];
   entitiesWithPermissions: { [key: string]: string[] };
@@ -22,6 +24,7 @@ interface IRolesConfigContext {
   ) => void;
   changeAllPermissions: (checked: boolean | string, permission: string) => void;
   changeAllRolePermissions: (checked: boolean | string, roleId: string) => void;
+  updateRolePermission: (roleId: string, permission: string) => void;
   deleteEntity: (entity: string) => void;
   deletePermission: (permission: string) => void;
   deleteRole: (roleId: string) => void;
@@ -29,14 +32,17 @@ interface IRolesConfigContext {
 }
 
 export const RolesConfigContext = createContext<IRolesConfigContext>({
+  initialRoles: [],
   rolesState: [],
   allPermissionsState: [],
+  initialPermissions: [],
   entities: [],
   entitiesWithPermissions: {},
   addNewRole: () => {},
   changeAllEntityPermissions: () => {},
   changeAllPermissions: () => {},
   changeAllRolePermissions: () => {},
+  updateRolePermission: () => {},
   deleteEntity: () => {},
   deletePermission: () => {},
   deleteRole: () => {},

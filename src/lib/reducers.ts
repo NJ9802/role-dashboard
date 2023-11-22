@@ -43,6 +43,22 @@ export function rolesReducer(draft: Role[], action: Action) {
       break;
     }
 
+    case "update_role_permission": {
+      const { permission, roleId } = action.payload;
+
+      const role = draft.filter((item) => item.id === roleId)[0];
+
+      if (role.permissions.includes(permission)) {
+        role.permissions = role.permissions.filter(
+          (item) => item !== permission,
+        );
+      } else {
+        role.permissions.push(permission);
+      }
+
+      break;
+    }
+
     case "change_all_entity_permissions": {
       const { checked, entity, allPermissions } = action.payload;
 

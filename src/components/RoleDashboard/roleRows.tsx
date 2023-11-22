@@ -12,6 +12,7 @@ const RoleRows: React.FC<RoleRowsProps> = ({}) => {
   const {
     rolesState,
     changeAllRolePermissions,
+    updateRolePermission,
     deleteRole,
     allPermissionsState,
   } = useContext(RolesConfigContext);
@@ -41,15 +42,17 @@ const RoleRows: React.FC<RoleRowsProps> = ({}) => {
           {allPermissionsState.map((permission) =>
             role.permissions.includes(permission) ? (
               <TableCell
+                onClick={() => updateRolePermission(role.id, permission)}
                 key={permission}
-                className="border text-center font-semibold transition-colors group-hover:bg-muted/50"
+                className="cursor-pointer border text-center font-semibold transition-colors group-hover:bg-muted/50"
               >
                 x
               </TableCell>
             ) : (
               <TableCell
+                onClick={() => updateRolePermission(role.id, permission)}
                 key={permission}
-                className="border transition-colors group-hover:bg-muted/50"
+                className="cursor-pointer border transition-colors group-hover:bg-muted/50"
               ></TableCell>
             ),
           )}
