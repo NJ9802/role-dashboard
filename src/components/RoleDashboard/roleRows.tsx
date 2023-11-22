@@ -21,7 +21,7 @@ const RoleRows: React.FC<RoleRowsProps> = ({}) => {
     <>
       {rolesState.map((role) => (
         <TableRow key={role.id} className="group">
-          <TableCell className="group sticky left-0 border bg-white px-0 font-semibold transition-colors group-hover:bg-muted/50">
+          <TableCell className="group sticky left-0 border bg-white px-0 font-semibold transition-colors group-hover:bg-muted">
             <div className="flex items-center justify-center gap-3 px-4">
               <Checkbox
                 onCheckedChange={(checked) =>

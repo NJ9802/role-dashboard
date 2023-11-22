@@ -1,3 +1,4 @@
+import { Role } from "@/types/role";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -36,3 +37,34 @@ export function formatPermission({
 }) {
   return `${entity}:${permission}`;
 }
+
+export function isPermissionsChanged(
+  allPermissionsState: string[],
+  initialPermissions: string[],
+) {
+  return (
+    allPermissionsState.toString() !== [...initialPermissions].sort().toString()
+  );
+}
+
+export const areRolesChanged = (initialRoles: Role[], rolesState: Role[]) => {
+  const getNameAndPermissions = (role: Role) => ({
+    name: role.name,
+    permissions: role.permissions,
+  });
+
+  const changed =
+    JSON.stringify(rolesState.map(getNameAndPermissions)) !==
+    JSON.stringify(initialRoles.map(getNameAndPermissions));
+
+  return changed;
+};
+
+export const arePermissionsChanged = (
+  initialPermissions: string[],
+  allPermissionsState: string[],
+) => {
+  return (
+    [...initialPermissions].sort().toString() !== allPermissionsState.toString()
+  );
+};

@@ -2,6 +2,7 @@ import { Role } from "@/types/role";
 import React from "react";
 import RolesDashboardContextProvider from "./context/roleDashboardContext";
 import RoleTable from "./roleTable";
+import SaveButton from "./saveButton";
 
 interface RoleDashboardProps {
   roles: Role[];
@@ -18,6 +19,10 @@ const RoleDashboard: React.FC<RoleDashboardProps> = ({
       allPermissions={allPermissions}
     >
       <RoleTable />
+
+      <div className="mt-12 flex w-full justify-end">
+        <SaveButton />
+      </div>
     </RolesDashboardContextProvider>
   );
 };
