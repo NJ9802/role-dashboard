@@ -68,3 +68,49 @@ export const arePermissionsChanged = (
     [...initialPermissions].sort().toString() !== allPermissionsState.toString()
   );
 };
+
+export const checkCheckboxState = (sampleLength: number, total: number) => {
+  if (sampleLength === total) {
+    return true;
+  } else if (sampleLength === 0) {
+    return false;
+  } else {
+    return "indeterminate";
+  }
+};
+
+export const getPermissionHeaderState = (
+  rolesState: Role[],
+  permission: string,
+) => {
+  const rolesWithThisPermission = rolesState.filter((role) =>
+    role.permissions.includes(permission),
+  );
+
+  return checkCheckboxState(rolesWithThisPermission.length, rolesState.length);
+};
+
+export const getEntityHeaderState = ({
+  entitiesWithPermissions,
+  entity,
+  rolesState,
+}: {
+  entitiesWithPermissions: { [key: string]: string[] };
+  entity: string;
+  rolesState: Role[];
+}) => {
+  const entityPermissions = entitiesWithPermissions[entity].map((permission) =>
+    formatPermission({ entity, permission }),
+  );
+
+  const rolesWithAllEntityPermissions = rolesState.filter((role) => {
+    return entityPermissions.every((permission) =>
+      role.permissions.includes(permission),
+    );
+  });
+
+  return checkCheckboxState(
+    rolesWithAllEntityPermissions.length,
+    rolesState.length,
+  );
+};
