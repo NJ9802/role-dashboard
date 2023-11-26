@@ -60,7 +60,10 @@ const AddNewRole: React.FC<AddNewRoleProps> = ({}) => {
             </span>
           </div>
         </TableCell>
-        <TableCell className="rounded-br-xl border bg-border"></TableCell>
+
+        {allPermissionsState.length !== 0 && (
+          <TableCell className="rounded-br-xl border bg-border"></TableCell>
+        )}
       </TableRow>
     </TableFooter>
   );
