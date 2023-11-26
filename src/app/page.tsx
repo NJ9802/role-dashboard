@@ -9,8 +9,8 @@ export default async function Home() {
   const allPermissions = permissions?.permissions;
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
+    <>
       <RoleDashboard roles={roles} allPermissions={allPermissions!} />
-    </main>
+    </>
   );
 }
