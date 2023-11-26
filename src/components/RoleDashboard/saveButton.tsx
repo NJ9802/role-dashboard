@@ -69,7 +69,7 @@ const SaveButton: React.FC<SaveButtonProps> = ({}) => {
 
   return (
     <Button
-      className="transition-colors duration-500"
+      className="transition duration-500"
       disabled={disabled}
       onClick={handleSave}
     >
