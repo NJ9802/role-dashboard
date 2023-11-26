@@ -8,6 +8,7 @@ import React, { useContext } from "react";
 import { Checkbox } from "../ui/checkbox";
 import { TableCell, TableRow } from "../ui/table";
 import { RolesConfigContext } from "./context/roleDashboardContext";
+import PermissionCell from "./permissionCell";
 
 interface RoleCellProps {
   role: Role;
@@ -44,31 +45,21 @@ const RoleCell: React.FC<RoleCellProps> = ({ role }) => {
 };
 
 const RoleRows: React.FC = ({}) => {
-  const { rolesState, updateRolePermission, allPermissionsState } =
-    useContext(RolesConfigContext);
+  const { rolesState, allPermissionsState } = useContext(RolesConfigContext);
 
   return (
     <>
       {rolesState.map((role) => (
         <TableRow key={role.id} className="group">
           <RoleCell role={role} />
-          {allPermissionsState.map((permission) =>
-            role.permissions.includes(permission) ? (
-              <TableCell
-                onClick={() => updateRolePermission(role.id, permission)}
-                key={permission}
-                className="cursor-pointer border text-center font-semibold transition-colors group-hover:bg-muted/50"
-              >
-                x
-              </TableCell>
-            ) : (
-              <TableCell
-                onClick={() => updateRolePermission(role.id, permission)}
-                key={permission}
-                className="cursor-pointer border transition-colors group-hover:bg-muted/50"
-              ></TableCell>
-            ),
-          )}
+          {allPermissionsState.map((permission) => (
+            <PermissionCell
+              key={permission}
+              checked={role.permissions.includes(permission)}
+              permission={permission}
+              roleId={role.id}
+            />
+          ))}
           <TableCell className="border bg-border"></TableCell>
         </TableRow>
       ))}
