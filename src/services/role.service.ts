@@ -28,7 +28,7 @@ class RoleService {
       permissions,
     });
 
-  bulkSaveAndUpdate = async (data: {roles: Role[]}) => 
+  bulkSaveAndUpdate = async (data: { roles: Role[]; deleteRoles: string[] }) =>
     ApiClientService.post(this.getPath("/update"), data);
 }
 

@@ -16,7 +16,10 @@ export const filterUpdatedRoles = (rolesState: Role[], initialRoles: Role[]) =>
 export const filterDeletedRolesIds = (
   rolesState: Role[],
   initialRoles: Role[],
-) =>
-  initialRoles
-    .filter((role) => !rolesState.map((item) => item._id).includes(role._id))
-    .map((role) => role._id);
+) => {
+  const deleteRoles = initialRoles
+    .filter((role) => role._id && !rolesState.map((item) => item._id).includes(role._id))
+    .map((role) => role._id!)
+
+  return deleteRoles.length !== 0 ? deleteRoles : [];
+};

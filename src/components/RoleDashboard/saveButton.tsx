@@ -1,6 +1,7 @@
 "use client";
 
 import { useBulkSaveAndUpdateRoles } from "@/hooks/useBulkSaveAndUpdateRoles";
+import { filterDeletedRolesIds } from "@/lib/filters";
 import { arePermissionsChanged, areRolesChanged } from "@/lib/utils";
 import React, { useCallback, useContext } from "react";
 import { validate } from "uuid";
@@ -10,7 +11,7 @@ import { RolesConfigContext } from "./context/roleDashboardContext";
 interface SaveButtonProps {}
 
 const SaveButton: React.FC<SaveButtonProps> = ({}) => {
-  const { mutate, isPending: isLoading, error } = useBulkSaveAndUpdateRoles();
+  const { mutate, isPending: isLoading } = useBulkSaveAndUpdateRoles();
   const { rolesState, initialRoles, allPermissionsState, initialPermissions } =
     useContext(RolesConfigContext);
 
@@ -24,8 +25,9 @@ const SaveButton: React.FC<SaveButtonProps> = ({}) => {
 
         return role;
       }),
+      deleteRoles: filterDeletedRolesIds(rolesState, initialRoles) || [],
     });
-  }, [rolesState, mutate]);
+  }, [rolesState, mutate, initialRoles]);
 
   const disabled =
     !areRolesChanged(initialRoles, rolesState) &&
