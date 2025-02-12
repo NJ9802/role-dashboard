@@ -20,7 +20,7 @@ const PermissionCell: React.FC<PermissionCellProps> = ({
   return (
     <TableCell
       onClick={() => updateRolePermission(roleId, permission)}
-      className="cursor-pointer border text-center font-semibold transition-colors group-hover:bg-muted/50"
+      className="cursor-pointer border text-center font-semibold transition-colors group-hover:bg-muted/50 overflow-hidden"
     >
       <AnimatePresence>
         {checked && (
