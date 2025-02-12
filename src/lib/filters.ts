@@ -2,15 +2,15 @@ import { Role } from "@/types/role";
 import { validate } from "uuid";
 
 export const filterNewRoles = (rolesState: Role[]) =>
-  rolesState.filter((role) => validate(role.id));
+  rolesState.filter((role) => validate(role._id || ""));
 
 export const filterUpdatedRoles = (rolesState: Role[], initialRoles: Role[]) =>
   rolesState
-    .filter((role) => !validate(role.id))
+    .filter((role) => !validate(role._id || ""))
     .filter(
       (role) =>
         JSON.stringify(role) !==
-        JSON.stringify(initialRoles.filter((item) => item.id === role.id)[0]),
+        JSON.stringify(initialRoles.filter((item) => item._id === role._id)[0]),
     );
 
 export const filterDeletedRolesIds = (
@@ -18,5 +18,5 @@ export const filterDeletedRolesIds = (
   initialRoles: Role[],
 ) =>
   initialRoles
-    .filter((role) => !rolesState.map((item) => item.id).includes(role.id))
-    .map((role) => role.id);
+    .filter((role) => !rolesState.map((item) => item._id).includes(role._id))
+    .map((role) => role._id);

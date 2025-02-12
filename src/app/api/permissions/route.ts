@@ -14,7 +14,7 @@ export const PUT = async (req: Request) => {
   }
 
   const updatePermissions = await prisma.permissions.update({
-    where: { id: permissions.id },
+    where: { id: permissions._id },
     data: { permissions: updatedPermissions },
   });
 

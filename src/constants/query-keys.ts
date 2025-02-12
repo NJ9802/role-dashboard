@@ -1,0 +1,1 @@
+export const ROLE_LIST_QUERY_KEY = "ROLE_LIST_QUERY_KEY";

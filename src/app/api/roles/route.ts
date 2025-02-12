@@ -21,7 +21,7 @@ export const PUT = async (req: Request) => {
   const updatedRoles = await prisma.$transaction(
     roles.map((role) =>
       prisma.role.update({
-        where: { id: role.id },
+        where: { id: role._id },
         data: { permissions: role.permissions },
       }),
     ),

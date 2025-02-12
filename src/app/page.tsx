@@ -1,16 +1,17 @@
-import RoleDashboard from "@/components/RoleDashboard/RoleDashboard";
-import { prisma } from "@/db/prismaClient";
+"use client";
+import RoleDashboardContainer from "@/containers/RoleDashboardContainer";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-export const dynamic = "force-dynamic";
+const queryClient = new QueryClient();
 
-export default async function Home() {
-  const roles = await prisma.role.findMany();
-  const permissions = await prisma.permissions.findFirst();
-  const allPermissions = permissions?.permissions;
+export default function Home() {
+  // const roles = await prisma.role.findMany();
+  // const permissions = await prisma.permissions.findFirst();
+  // const allPermissions = permissions?.permissions;
 
   return (
-    <>
-      <RoleDashboard roles={roles} allPermissions={allPermissions!} />
-    </>
+    <QueryClientProvider client={queryClient}>
+      <RoleDashboardContainer />
+    </QueryClientProvider>
   );
 }

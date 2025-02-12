@@ -33,7 +33,7 @@ export function rolesReducer(draft: Role[], action: Action) {
     case "change_all_role_permissions": {
       const { roleId, checked, allPermissions } = action.payload;
 
-      const role = draft.filter((item) => item.id === roleId)[0];
+      const role = draft.filter((item) => item._id === roleId)[0];
 
       if (checked) {
         role.permissions = allPermissions;
@@ -46,7 +46,7 @@ export function rolesReducer(draft: Role[], action: Action) {
     case "update_role_permission": {
       const { permission, roleId } = action.payload;
 
-      const role = draft.filter((item) => item.id === roleId)[0];
+      const role = draft.filter((item) => item._id === roleId)[0];
 
       if (role.permissions.includes(permission)) {
         role.permissions = role.permissions.filter(
@@ -89,7 +89,7 @@ export function rolesReducer(draft: Role[], action: Action) {
       );
 
       draft.push({
-        id: uuidv4(),
+        _id: uuidv4(),
         name: newRoleName,
         permissions: readPermissions,
       });
@@ -115,7 +115,7 @@ export function rolesReducer(draft: Role[], action: Action) {
     }
 
     case "delete_role": {
-      return draft.filter((role) => role.id !== action.payload.roleId);
+      return draft.filter((role) => role._id !== action.payload.roleId);
     }
 
     default:

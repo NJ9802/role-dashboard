@@ -28,7 +28,7 @@ const RoleCell: React.FC<RoleCellProps> = ({ role }) => {
         <Checkbox
           checked={checked}
           onCheckedChange={(checked) =>
-            changeAllRolePermissions(checked, role.id)
+            changeAllRolePermissions(checked, role._id || "")
           }
           className="dashboardHiddenAction"
         />
@@ -36,7 +36,7 @@ const RoleCell: React.FC<RoleCellProps> = ({ role }) => {
         <span>{role.name}</span>
 
         <Trash2
-          onClick={() => deleteRole(role.id)}
+          onClick={() => deleteRole(role._id || "")}
           className="dashboardHiddenAction h-4 w-4 cursor-pointer"
         />
       </div>
@@ -49,15 +49,15 @@ const RoleRows: React.FC = ({}) => {
 
   return (
     <>
-      {rolesState.map((role) => (
-        <TableRow key={role.id} className="group">
+      {rolesState.map((role, i) => (
+        <TableRow key={role._id || role.name + i} className="group">
           <RoleCell role={role} />
           {allPermissionsState.map((permission) => (
             <PermissionCell
               key={permission}
               checked={role.permissions.includes(permission)}
               permission={permission}
-              roleId={role.id}
+              roleId={role._id || ""}
             />
           ))}
           <TableCell className="border bg-border"></TableCell>

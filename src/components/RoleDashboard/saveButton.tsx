@@ -1,67 +1,31 @@
 "use client";
 
-import {
-  filterDeletedRolesIds,
-  filterNewRoles,
-  filterUpdatedRoles,
-} from "@/lib/filters";
-import {
-  createNewRoles,
-  deleteRoles,
-  updatePermissions,
-  updateRoles,
-} from "@/lib/services";
-import {
-  arePermissionsChanged,
-  areRolesChanged,
-  isPermissionsChanged,
-} from "@/lib/utils";
-import { useRouter } from "next/navigation";
-import React, { useContext, useState } from "react";
+import { useBulkSaveAndUpdateRoles } from "@/hooks/useBulkSaveAndUpdateRoles";
+import { arePermissionsChanged, areRolesChanged } from "@/lib/utils";
+import React, { useCallback, useContext } from "react";
+import { validate } from "uuid";
 import { Button } from "../ui/button";
 import { RolesConfigContext } from "./context/roleDashboardContext";
 
 interface SaveButtonProps {}
 
 const SaveButton: React.FC<SaveButtonProps> = ({}) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const { mutate, isPending: isLoading, error } = useBulkSaveAndUpdateRoles();
   const { rolesState, initialRoles, allPermissionsState, initialPermissions } =
     useContext(RolesConfigContext);
-  const router = useRouter();
 
-  const handleSave = async () => {
-    setIsLoading(true);
-    const newRoles = filterNewRoles(rolesState);
-    const updatedRoles = filterUpdatedRoles(rolesState, initialRoles);
-    const deletedRolesIds = filterDeletedRolesIds(rolesState, initialRoles);
+  const handleSave = useCallback(() => {
+    mutate({
+      roles: rolesState.map((role) => {
+        if (validate(role._id || "")) {
+          const { _id, ...rest } = role;
+          return rest;
+        }
 
-    try {
-      const promises = [];
-      if (newRoles.length !== 0) {
-        promises.push(await createNewRoles(newRoles));
-      }
-
-      if (updatedRoles.length !== 0) {
-        promises.push(await updateRoles(updatedRoles));
-      }
-
-      if (deletedRolesIds.length !== 0) {
-        promises.push(await deleteRoles(deletedRolesIds));
-      }
-
-      if (isPermissionsChanged(allPermissionsState, initialPermissions)) {
-        promises.push(await updatePermissions(allPermissionsState));
-      }
-
-      await Promise.all(promises);
-      router.refresh();
-    } catch (error) {
-      console.log(error);
-      //  Notify the user that an error occurred
-    } finally {
-      setIsLoading(false);
-    }
-  };
+        return role;
+      }),
+    });
+  }, [rolesState, mutate]);
 
   const disabled =
     !areRolesChanged(initialRoles, rolesState) &&
